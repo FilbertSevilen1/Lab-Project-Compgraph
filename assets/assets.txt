@@ -1,0 +1,3 @@
+assets:
+gltf : https://sketchfab.com/3d-models/winter-house-22e61c8db6a54c59a212e0c1927e0534
+skybox : https://images.hdqwalls.com/download/snow-sky-winter-49-1080x2160.jpg
