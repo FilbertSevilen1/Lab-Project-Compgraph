@@ -113,7 +113,7 @@ function addText(text){
 }
 
 function createGlobe(){
-    let geometry = new THREE.SphereGeometry(14.5, 32,16,0, 6.3, 1.1, 3)
+    let geometry = new THREE.SphereGeometry(14.5, 32,16,6.3, 6.3, 1.5, 3)
     let material = new THREE.MeshLambertMaterial({
         color:"#FFFFFF",
         transparent: true,
@@ -122,6 +122,82 @@ function createGlobe(){
     let globe = new THREE.Mesh(geometry,material);
     globe.rotateX(-(Math.PI/2))
     return globe;
+}
+
+function createSnowmanBodySphere(x,y,z,size){
+    let geometry = new THREE.SphereGeometry(size,32,6);
+    let material = new THREE.MeshStandardMaterial({
+        color:"#FFFFFF"
+    })
+    let lowerbody = new THREE.Mesh(geometry,material);
+    lowerbody.position.set(x,y,z)
+    scene.add(lowerbody);
+}
+
+function createSnowmanCircle(x,y,z){
+    let geometry = new THREE.SphereGeometry(0.1, 32, 6)
+    let material = new THREE.MeshBasicMaterial({
+        color:"#000000"
+    })
+    let eye = new THREE.Mesh(geometry,material);
+    eye.position.set(x,y,z)
+    scene.add(eye);
+}
+
+function createSnowmanNose(x,y,z){
+    let geometry = new THREE.ConeGeometry(0.15,0.5,32)
+    let material = new THREE.MeshBasicMaterial({
+        color:"#FFA500"
+    })
+    let nose = new THREE.Mesh(geometry,material);
+    nose.position.set(x,y,z)
+    nose.rotateX(Math.PI)
+    scene.add(nose);
+}
+
+function createSnowmanBody(x,y,z){
+    createSnowmanBodySphere(x,y,z, 1.5);
+    createSnowmanBodySphere(x,y,z+1.5, 1);
+    createSnowmanBodySphere(x,y,z+2.5, 0.8);
+    createSnowmanCircle(x+0.3,y-0.6,z+3);
+    createSnowmanCircle(x-0.3,y-0.6,z+3);
+    createSnowmanNose(x,y-1,z+2.5)
+    createSnowmanCircle(x,y-1,z+2);
+    createSnowmanCircle(x,y-1,z+1.6);
+    createSnowmanCircle(x,y-1,z+1.0);
+}
+
+function createSnowman(){
+    createSnowmanBody(8,-6,1.5);
+}
+
+function createTreeTrunk(x,y,z){
+    let geometry = new THREE.BoxGeometry(0.5,7,0.5);
+    let material = new THREE.MeshPhongMaterial({
+        shine:100,
+        color:"#3F301D"
+    })
+    let treeTrunk = new THREE.Mesh(geometry,material);
+    treeTrunk.position.set(x,y,z)
+    treeTrunk.rotateX(Math.PI/2)
+    scene.add(treeTrunk)
+}
+
+function createTreeLeaf(x,y,z){
+    let geometry = new THREE.ConeGeometry(1.5,5,32);
+    let material = new THREE.MeshBasicMaterial({
+        shine:100,
+        color:"#32612D"
+    })
+    let treeLeaf = new THREE.Mesh(geometry,material);
+    treeLeaf.position.set(x,y,z+4.5)
+    treeLeaf.rotateX(Math.PI/2)
+    scene.add(treeLeaf)
+}
+
+function createTree(x,y,z){
+    createTreeTrunk(x,y,z);
+    createTreeLeaf(x,y,z);
 }
 
 window.onload = () => {
@@ -140,6 +216,11 @@ window.onload = () => {
 
     addWinterHouse();
     addText("Snowball");
+
+    createSnowman();
+
+    createTree(-10,0,0);
+    createTree(-8,4,0);
 
     render();
 }
